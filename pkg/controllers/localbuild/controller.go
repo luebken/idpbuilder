@@ -69,6 +69,7 @@ func (r *LocalbuildReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 	subReconcilers := []subReconciler{
 		r.ReconcileProjectNamespace,
 		r.ReconcileArgo,
+		r.ReconcileGitea,
 		r.ReconcileEmbeddedGitServer,
 		r.ReconcileArgoApps,
 	}
@@ -124,6 +125,11 @@ func (r *LocalbuildReconciler) ReconcileProjectNamespace(ctx context.Context, re
 
 func (r *LocalbuildReconciler) ReconcileEmbeddedGitServer(ctx context.Context, req ctrl.Request, resource *v1alpha1.Localbuild) (ctrl.Result, error) {
 	log := log.FromContext(ctx)
+
+	if resource.Spec.PackageConfigs.GitConfig.Type != gitServerResourceName {
+		log.Info("GitServer installation disabled, skipping")
+		return ctrl.Result{}, nil
+	}
 
 	// Bail if argo is not yet available
 	if !resource.Status.ArgoAvailable {

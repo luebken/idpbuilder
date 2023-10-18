@@ -20,7 +20,14 @@ type EmbeddedArgoApplicationsPackageConfigSpec struct {
 	Enabled bool `json:"enabled,omitempty"`
 }
 
+// GitConfigSpec controls what git server to use for the idpbuilder
+// It can take on the values of either gitea or gitserver
+type GitConfigSpec struct {
+	Type string `json:"type,omitempty"`
+}
+
 type PackageConfigsSpec struct {
+	GitConfig                GitConfigSpec                             `json:"gitConfig,omitempty"`
 	Argo                     ArgoPackageConfigSpec                     `json:"argoPackageConfigs,omitempty"`
 	EmbeddedArgoApplications EmbeddedArgoApplicationsPackageConfigSpec `json:"embeddedArgoApplicationsPackageConfigs,omitempty"`
 }
@@ -35,6 +42,7 @@ type LocalbuildStatus struct {
 	ObservedGeneration int64 `json:"observedGeneration,omitempty"`
 
 	GitServerAvailable bool `json:"gitServerAvailable,omitempty"`
+	GiteaAvailable     bool `json:"giteaAvailable,omitempty"`
 	ArgoAvailable      bool `json:"argoAvailable,omitempty"`
 	ArgoAppsCreated    bool `json:"argoAppsCreated,omitempty"`
 }

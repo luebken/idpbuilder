@@ -148,6 +148,9 @@ func (b *Build) Run(ctx context.Context, recreateCluster bool) error {
 				EmbeddedArgoApplications: v1alpha1.EmbeddedArgoApplicationsPackageConfigSpec{
 					Enabled: true,
 				},
+				GitConfig: v1alpha1.GitConfigSpec{
+					Type: "gitea",
+				},
 			},
 		}
 		return nil

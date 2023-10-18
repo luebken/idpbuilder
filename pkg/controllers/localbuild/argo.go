@@ -19,7 +19,7 @@ import (
 )
 
 //go:embed resources/argo/*
-var installFS embed.FS
+var installArgoFS embed.FS
 
 const (
 	argoApplicationControllerName string = "argocd-application-controller"
@@ -28,7 +28,7 @@ const (
 )
 
 func GetRawInstallResources() ([][]byte, error) {
-	return util.ConvertFSToBytes(installFS, "resources/argo")
+	return util.ConvertFSToBytes(installArgoFS, "resources/argo")
 }
 
 func GetK8sInstallResources(scheme *runtime.Scheme) ([]client.Object, error) {
